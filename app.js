@@ -98,19 +98,53 @@ function handcard_onmousedown(evt) {
 
 	document.addEventListener("mousemove", document_onmousemove);
 	hand_area.addEventListener("mouseup", handarea_onmouseup);
-	document.getElementById("player-area").addEventListener("mousemove", playerarea_onmousemove);
-	document.getElementById("encounter-area").addEventListener("mousemove", encounterarea_onmousemove);
+
+	document.getElementById("player-area").addEventListener("mouseup", playerarea_onmouseup);
+	document.getElementById("encounter-area").addEventListener("mouseup", encounterarea_onmouseup);
+}
+
+
+function handarea_onmouseup(evt) {
+
+	console.log("hand_onmouseup");
+
+	// dropped back in hand
+	const hand_area = document.getElementById("hand-area");
+
+	// insert shadow card
+	hand_area.insertBefore(card_inflight, card_shadow);
+
+	// prevent slideup animtions
+	hand_area.classList.add("inspect");
+
+	card_inflight.classList.remove("inflight");
+	document.getElementById("board").append(card_shadow);
+
+
+	document_onmousemove(evt);
+	hand_arrange();
+
+	document.removeEventListener("mousemove", document_onmousemove);
+	hand_area.removeEventListener("mouseup", handarea_onmouseup);
+
+	document.getElementById("player-area").removeEventListener("mouseup", playerarea_onmouseup);
+	document.getElementById("encounter-area").removeEventListener("mouseup", encounterarea_onmouseup);
+
+	// card_inflight.removeEventListener("mousedown", handcard_onmousedown);
+	// card_inflight.removeEventListener("mouseup", handcard_onmouseup);
+	card_inflight = null;
 }
 
 
 function handcard_onmousemove(evt) {
 
-	console.log(`handcard_onmousemove ${evt.target.dataset.id}`);
-
+	
 	if(card_inflight === null) {
 		evt.stopPropagation();
 		return false;
 	}
+
+	console.log(`handcard_onmousemove ${evt.target.dataset.id}`);
 
 	card_inflight.style.left = (evt.pageX - card_offset_x) + "px";
 	card_inflight.style.top = (evt.pageY - card_offset_y) + "px";
@@ -139,47 +173,33 @@ function handcard_onmousemove(evt) {
 }
 
 
-function handarea_onmouseup(evt) {
-
-	console.log("hand_onmouseup");
-
-	// dropped back in hand
-
-	// card_inflight.removeEventListener("mousedown", handcard_onmousedown);
-	// card_inflight.removeEventListener("mouseup", handcard_onmouseup);
-	card_inflight = null;
-	document.removeEventListener("mousemove", document_onmousemove);
-}
-
-
 function document_onmousemove(evt) {
 
+	// this is default in case the event is not picked by anything else
+	if(card_inflight === null) return false;
 	console.log("document_onmousemove");
-	if(card_inflight === null) return false;
 	card_inflight.style.left = (evt.pageX - card_offset_x) + "px";
 	card_inflight.style.top = (evt.pageY - card_offset_y) + "px";
 }
 
 
-function playerarea_onmousemove(evt) {
-	console.log("playerarea_onmousemove");
+function document_onmouseup(evt) {
 
+	// this is default in case the event is not picked by anything else
 	if(card_inflight === null) return false;
-	card_inflight.style.left = (evt.pageX - card_offset_x) + "px";
-	card_inflight.style.top = (evt.pageY - card_offset_y) + "px";
-
-	evt.stopPropagation();
-	return false;
+	console.log("document_onmouseup");
 }
 
 
-function encounterarea_onmousemove(evt) {
-	console.log("encounterarea_onmousemove");
+function playerarea_onmouseup(evt) {
 
 	if(card_inflight === null) return false;
-	card_inflight.style.left = (evt.pageX - card_offset_x) + "px";
-	card_inflight.style.top = (evt.pageY - card_offset_y) + "px";
+	console.log("playerarea_onmouseup");
+}
 
-	evt.stopPropagation();
-	return false;
+
+function encounterarea_onmouseup(evt) {
+	
+	if(card_inflight === null) return false;
+	console.log("encounterarea_onmouseup");
 }
