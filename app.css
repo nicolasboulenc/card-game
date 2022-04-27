@@ -1,0 +1,177 @@
+
+:root {
+	--card-img-width: 300;
+	--card-img-height: 419;
+	--card-height: 21vh;
+	--card-width: calc(var(--card-height) * var(--card-img-width) / var(--card-img-height));
+	--card-spacing: calc(min(1vh, 1vw));
+	--discard-scale: 0.7;
+	--card-spacing-scaled: calc(var(--card-spacing) * var(--discard-scale));
+	--discard-card-width: calc(var(--card-width) * var(--discard-scale));
+	--discard-card-height: calc(var(--card-height) * var(--discard-scale));
+}
+
+* {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+body {
+	border: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+#board {
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	flex-direction: column;
+	background: center/cover url("man-bg2.png");
+}
+
+.area {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+#vilain-area {
+	border: 3px solid red;
+	height: 24vh;
+	padding-top: 2vh;
+	justify-content: center;
+	column-gap: var(--card-spacing);
+	z-index: 2;
+}
+
+#vilain-discard-area {
+	border: 3px dotted orange;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: var(--card-spacing-scaled);
+	gap: var(--card-spacing-scaled) var(--card-spacing-scaled);
+}
+
+#player-discard-area {
+	border: 3px dotted purple;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	padding: var(--card-spacing-scaled);
+	gap: var(--card-spacing-scaled) var(--card-spacing-scaled);
+}
+
+#vilain-discard-area .card, #player-discard-area .card {
+	width: var(--discard-card-width);
+	height: var(--discard-card-height);
+	background-size: var(--discard-card-width) var(--discard-card-height);
+}
+
+#encounter-area {
+	border: 3px solid purple;
+	height: 22vh;
+	justify-content: center;
+	column-gap: var(--card-spacing);
+}
+
+#player-area {
+	border: 3px solid blue;
+	height: 36vh;
+	justify-content: space-around;
+}
+
+#identity-area {
+	border: 3px dotted green;
+	padding-right: calc(var(--card-spacing) * 2);
+}
+
+#inplay-area {
+	border: 3px dotted blue;
+	gap: var(--card-spacing) var(--card-spacing);
+}
+
+.spacer-area .card {
+	visibility: hidden;
+}
+
+#hand-area {
+	border: 3px solid darkkhaki;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 18vh;
+	justify-content: center;
+	align-items: flex-end;
+	z-index: 2;
+}
+
+.card {
+	width: var(--card-width);
+	height: var(--card-height);
+	box-shadow: calc(var(--card-width) / 40) calc(var(--card-width) / 40) calc(var(--card-width) / 80) #333;
+	background-position: top;
+	background-size: var(--card-width) var(--card-height);
+	flex-shrink: 0;
+	border-radius: calc(var(--card-width) / 21);
+	border-left: 1px solid black;
+	border-top: 1px solid black;
+	border-right: 1px solid grey;
+	border-bottom: 1px solid grey;
+}
+
+.card.landscape {
+	width: var(--card-height);
+	height: var(--card-width);
+	background-size: var(--card-height) var(--card-width);
+}
+
+.card.attachement {
+	margin-right: calc(var(--card-width) * -0.8);
+	margin-top: calc(var(--card-height) * -0.1);
+}
+
+.card.inflight {
+	position: absolute;
+	z-index: 10;
+	transform: none !important;
+	pointer-events: none;
+}
+
+.card#shadow-card {
+	display: none;
+	/* visibility: hidden; */
+	width: var(--discard-card-width);
+	height: var(--card-height);
+	box-shadow: none;
+	border: none;
+}
+
+#hand-area .card {
+	display: block !important;
+	margin: 0 calc(var(--card-width) / -20);	/* to fix as part of the position? */
+	animation: none;
+}
+
+#hand-area.inspect .card:hover {
+	animation: slideup 0.1s forwards ease;
+	/* animation-duration: 0.1s;
+	animation-name: slideup;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease; */
+}
+
+@keyframes slideup {
+	from {
+		z-index: 1;
+	}
+	to {
+		transform: translateY(0px) rotate(0deg);
+		z-index: 2;
+	}
+}
+

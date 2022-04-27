@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Card game</title>
+	<link rel="stylesheet" href="app.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+</head>
+<body>
+	<div id="board">
+		<div id="vilain-area" class="area">
+			<div class="card attachement" data-id="charge"></div>
+			<div class="card identity" data-id="rhino"></div>
+			<div class="card scheme landscape" data-id="break-in"></div>
+		</div>
+		<div id="vilain-discard-area" class="area">
+			<div class="card discard" data-id="charge"></div>
+			<div class="card deck" data-id="back"></div>
+		</div>
+		<div id="encounter-area" class="area">
+			<div class="card" data-id="shocker"></div>
+			<div class="card" data-id="hydra-merc"></div>
+			<div class="card scheme landscape" data-id="side-scheme"></div>
+		</div>
+		<div id="player-area" class="area">
+			<div id="identity-area" class="area">
+				<div class="card" data-id="01011"></div>
+			</div>
+			<div id="inplay-area" class="area vignet">
+				<div class="card" data-id="spider-girl"></div>
+				<div class="card" data-id="mansion"></div>
+				<div class="card" data-id="combat-training"></div>
+				<div class="card" data-id="heroic-intuition"></div>
+				<div class="card" data-id="tac-team"></div>
+			</div>
+			<div class="area spacer-area">
+				<div class="card"></div>
+			</div>
+		</div>
+		<div id="hand-area" class="area inspect">
+			<div class="card" data-id="contaminant-immunity"></div>
+			<div class="card" data-id="inconspicuous"></div>
+			<div class="card" data-id="pheromones"></div>
+			<div class="card" data-id="spider-man"></div>
+			<div class="card" data-id="venom-blast"></div>
+			<div class="card" data-id="captain-marvel"></div>
+		</div>
+		<div id="player-discard-area" class="area">
+			<div class="card discard" data-id="clear"></div>
+			<div class="card deck" data-id="back"></div>
+		</div>
+		<div class="card" id="shadow-card"></div>
+	</div>
+	<script src="app.js"></script>
+</body>
+</html>
